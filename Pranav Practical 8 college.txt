@@ -1,0 +1,52 @@
+
+CREATE DATABASE IF NOT EXISTS college_db;
+USE college_db;
+
+DROP TABLE IF EXISTS Student_Result;
+CREATE TABLE Student_Result (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(20),
+    marks INT
+);
+
+INSERT INTO Student_Result VALUES
+(1, 'Amit', 'IT', 85),
+(2, 'Ravi', 'IT', 70),
+(3, 'Neha', 'IT', 90),
+(4, 'Sneha', 'IT', 60),
+(5, 'Raj', 'IT', 75),
+(6, 'Pooja', 'IT', 55),
+(7, 'Kiran', 'IT', 95),
+(8, 'Anjali', 'IT', 80);
+
+SELECT * FROM Student_Result;
+
+SELECT department, AVG(marks) AS avg_marks
+FROM Student_Result
+GROUP BY department;
+
+SELECT department, MAX(marks) AS highest_marks
+FROM Student_Result
+GROUP BY department;
+
+SELECT department, MIN(marks) AS lowest_marks
+FROM Student_Result
+GROUP BY department;
+
+SELECT department, COUNT(*) AS total_students
+FROM Student_Result
+GROUP BY department;
+
+SELECT name, marks
+FROM Student_Result
+WHERE marks > 75;
+
+SELECT name, marks,
+CASE
+    WHEN marks >= 85 THEN 'A'
+    WHEN marks >= 70 THEN 'B'
+    WHEN marks >= 50 THEN 'C'
+    ELSE 'Fail'
+END AS Grade
+FROM Student_Result;
