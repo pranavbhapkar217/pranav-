@@ -1,0 +1,152 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Address
+{
+    char name[50];
+    char phone[15];
+    char address[100];
+};
+
+int main()
+{
+    struct Address a[100];
+    int choice, n = 0, i, j, found;
+    char search[50];
+
+    while (1)
+    {
+        printf("\n===== ADDRESS BOOK =====\n");
+        printf("1. Create Address Book\n");
+        printf("2. View Address Book\n");
+        printf("3. Insert a Record\n");
+        printf("4. Delete a Record\n");
+        printf("5. Modify a Record\n");
+        printf("6. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        getchar();
+
+        switch (choice)
+        {
+            case 1:
+                n = 0;
+                printf("Address Book Created Successfully!\n");
+                break;
+
+            case 2:
+                if (n == 0)
+                {
+                    printf("Address Book is Empty!\n");
+                }
+                else
+                {
+                    printf("\n----- Address Book -----\n");
+                    for (i = 0; i < n; i++)
+                    {
+                        printf("\nName: %s", a[i].name);
+                        printf("\nPhone: %s", a[i].phone);
+                        printf("\nAddress: %s\n", a[i].address);
+                    }
+                }
+                break;
+
+            case 3:
+                if (n < 100)
+                {
+                    printf("Enter Name: ");
+                    fgets(a[n].name, 50, stdin);
+                    a[n].name[strcspn(a[n].name, "\n")] = 0;
+
+                    printf("Enter Phone Number: ");
+                    fgets(a[n].phone, 15, stdin);
+                    a[n].phone[strcspn(a[n].phone, "\n")] = 0;
+
+                    printf("Enter Address: ");
+                    fgets(a[n].address, 100, stdin);
+                    a[n].address[strcspn(a[n].address, "\n")] = 0;
+
+                    n++;
+                    printf("Record Inserted Successfully!\n");
+                }
+                else
+                {
+                    printf("Address Book is Full!\n");
+                }
+                break;
+
+            case 4:
+                printf("Enter Name to Delete: ");
+                fgets(search, 50, stdin);
+                search[strcspn(search, "\n")] = 0;
+
+                found = 0;
+
+                for (i = 0; i < n; i++)
+                {
+                    if (strcmp(a[i].name, search) == 0)
+                    {
+                        for (j = i; j < n - 1; j++)
+                        {
+                            a[j] = a[j + 1];
+                        }
+                        n--;
+                        found = 1;
+                        printf("Record Deleted Successfully!\n");
+                        break;
+                    }
+                }
+
+                if (!found)
+                    printf("Record Not Found!\n");
+
+                break;
+
+            case 5:
+                printf("Enter Name to Modify: ");
+                fgets(search, 50, stdin);
+                search[strcspn(search, "\n")] = 0;
+
+                found = 0;
+
+                for (i = 0; i < n; i++)
+                {
+                    if (strcmp(a[i].name, search) == 0)
+                    {
+                        printf("Enter New Name: ");
+                        fgets(a[i].name, 50, stdin);
+                        a[i].name[strcspn(a[i].name, "\n")] = 0;
+
+                        printf("Enter New Phone Number: ");
+                        fgets(a[i].phone, 15, stdin);
+                        a[i].phone[strcspn(a[i].phone, "\n")] = 0;
+
+                        printf("Enter New Address: ");
+                        fgets(a[i].address, 100, stdin);
+                        a[i].address[strcspn(a[i].address, "\n")] = 0;
+
+                        found = 1;
+                        printf("Record Modified Successfully!\n");
+                        break;
+                    }
+                }
+
+                if (!found)
+                    printf("Record Not Found!\n");
+
+                break;
+
+            case 6:
+                printf("Exiting Address Book...\n");
+                exit(0);
+
+            default:
+                printf("Invalid Choice! Try Again.\n");
+        }
+    }
+
+    return 0;
+}
